@@ -24,7 +24,7 @@ public class VendingMachineItem {
 	 */
 	public VendingMachineItem( String name, double price ) throws VendingMachineException {
 		this.name = name;
-		if( price < 0 ) {
+		if( price <= 0 ) {
 			throw new VendingMachineException(PRICE_LESS_THAN_ZERO_MESSAGE);
 		} else {
 			this.price = price;
