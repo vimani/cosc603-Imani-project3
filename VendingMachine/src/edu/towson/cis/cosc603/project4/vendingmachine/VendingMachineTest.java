@@ -42,8 +42,9 @@ public class VendingMachineTest {
 	 */
 	@Test (expected = VendingMachineException.class)
 	public void testAddItem() {
+		for(int i = 0; i <2; i++)
 		yorkVending.addItem(firstItem, "A");
-		yorkVending.addItem(secondItem, "A");
+		//yorkVending.addItem(secondItem, "E");
 	}
 
 	/**
@@ -78,9 +79,34 @@ public class VendingMachineTest {
 	@Test
 	public void testReturnChange() {
 		yorkVending.addItem(firstItem, "A");
-		yorkVending.insertMoney(20.00);
+		yorkVending.addItem(firstItem, "B");
+		yorkVending.addItem(firstItem, "C");
+		yorkVending.insertMoney(8.00);
 		yorkVending.makePurchase(VendingMachine.A_CODE);
-		assertEquals(14.50,yorkVending.returnChange(),0.001);
+		assertEquals(2.50,yorkVending.returnChange(),0.001);
+		assertFalse(yorkVending.makePurchase(VendingMachine.A_CODE));
+		yorkVending.returnChange();
+		assertFalse(yorkVending.makePurchase(VendingMachine.A_CODE));
+	}
+	
+	/**
+	 * Test method for {@link edu.towson.cis.cosc603.project4.vendingmachine.VendingMachine#removeItem(java.lang.String)}.
+	 */
+	@Test (expected = VendingMachineException.class)
+	public void testRemoveItem() {
+		yorkVending.removeItem(VendingMachine.D_CODE);
+		yorkVending.removeItem(VendingMachine.D_CODE);
+		//assertTrue(yorkVending.makePurchase(VendingMachine.D_CODE));
+	}
+	
+	/**
+	 * Test method for {@link edu.towson.cis.cosc603.project4.vendingmachine.VendingMachine#removeItem(java.lang.String)}.
+	 */
+	@Test (expected = VendingMachineException.class)
+	public void testAnotherRemoveItem() {
+		yorkVending.removeItem("E");
+		//yorkVending.removeItem(VendingMachine.D_CODE);
+		//assertTrue(yorkVending.makePurchase(VendingMachine.D_CODE));
 	}
 
 }
