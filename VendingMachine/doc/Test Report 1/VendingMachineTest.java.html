@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>VendingMachineTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">VendingMachine (Apr 7, 2016 12:21:37 AM)</a> &gt; <a href="../../index.html" class="el_group">VendingMachine</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.towson.cis.cosc603.project4.vendingmachine</a> &gt; <span class="el_source">VendingMachineTest.java</span></div><h1>VendingMachineTest.java</h1><pre class="source lang-java linenums">/**
+ * 
+ */
+package edu.towson.cis.cosc603.project4.vendingmachine;
+
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+/**
+ * @author NFJ6TVK
+ *
+ */
+<span class="fc" id="L16">public class VendingMachineTest {</span>
+<span class="fc" id="L17">	VendingMachine yorkVending = new VendingMachine();</span>
+<span class="fc" id="L18">	VendingMachineItem ultimateItem = new VendingMachineItem(&quot;Gum&quot;, 1.75);</span>
+	VendingMachineItem firstItem, secondItem, thirdItem, forthItem;
+
+	/**
+	 * @throws java.lang.Exception
+	 */
+	@Before
+	public void setUp() throws Exception {
+<span class="fc" id="L26">		firstItem = new VendingMachineItem(&quot;Juice&quot;, 5.50);</span>
+<span class="fc" id="L27">		secondItem = new VendingMachineItem(&quot;Cinnabon&quot;, 2.75);</span>
+<span class="fc" id="L28">		forthItem = new VendingMachineItem(&quot;Honeybun&quot;, 1.75);</span>
+<span class="fc" id="L29">		yorkVending.addItem(ultimateItem, VendingMachine.D_CODE);</span>
+<span class="fc" id="L30">	}</span>
+
+	/**
+	 * Test method for {@link edu.towson.cis.cosc603.project4.vendingmachine.VendingMachine#VendingMachine()}.
+	 */
+	@Test 
+	public void testVendingMachine() {
+<span class="fc" id="L37">		assertEquals(0.00, yorkVending.balance, 0.001);</span>
+<span class="fc" id="L38">	}</span>
+
+	/**
+	 * Test method for {@link edu.towson.cis.cosc603.project4.vendingmachine.VendingMachine#addItem(edu.towson.cis.cosc603.project4.vendingmachine.VendingMachineItem, java.lang.String)}.
+	 */
+	@Test (expected = VendingMachineException.class)
+	public void testAddItem() {
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">		for(int i = 0; i &lt;2; i++)</span>
+<span class="fc" id="L46">		yorkVending.addItem(firstItem, &quot;A&quot;);</span>
+		//yorkVending.addItem(secondItem, &quot;E&quot;);
+<span class="nc" id="L48">	}</span>
+
+	/**
+	 * Test method for {@link edu.towson.cis.cosc603.project4.vendingmachine.VendingMachine#insertMoney(double)}.
+	 */
+	@Test (expected = VendingMachineException.class)
+	public void testInsertMoney() {
+<span class="nc" id="L55">		yorkVending.insertMoney(-1);</span>
+<span class="nc" id="L56">	}</span>
+
+	/**
+	 * Test method for {@link edu.towson.cis.cosc603.project4.vendingmachine.VendingMachine#getBalance()}.
+	 */
+	@Test
+	public void testGetBalance() {
+<span class="fc" id="L63">		yorkVending.insertMoney(20.00);</span>
+<span class="fc" id="L64">		assertEquals(20.00, yorkVending.getBalance(), 0.001);</span>
+<span class="fc" id="L65">	}</span>
+
+	/**
+	 * Test method for {@link edu.towson.cis.cosc603.project4.vendingmachine.VendingMachine#makePurchase(java.lang.String)}.
+	 */
+	@Test
+	public void testMakePurchase() {
+<span class="fc" id="L72">		yorkVending.insertMoney(20.00);</span>
+<span class="fc" id="L73">		assertTrue(yorkVending.makePurchase(VendingMachine.D_CODE));</span>
+<span class="fc" id="L74">	}</span>
+
+	/**
+	 * Test method for {@link edu.towson.cis.cosc603.project4.vendingmachine.VendingMachine#returnChange()}.
+	 */
+	@Test
+	public void testReturnChange() {
+<span class="fc" id="L81">		yorkVending.addItem(firstItem, &quot;A&quot;);</span>
+<span class="fc" id="L82">		yorkVending.addItem(firstItem, &quot;B&quot;);</span>
+<span class="fc" id="L83">		yorkVending.addItem(firstItem, &quot;C&quot;);</span>
+<span class="fc" id="L84">		yorkVending.insertMoney(8.00);</span>
+<span class="fc" id="L85">		yorkVending.makePurchase(VendingMachine.A_CODE);</span>
+<span class="fc" id="L86">		assertEquals(2.50,yorkVending.returnChange(),0.001);</span>
+<span class="fc" id="L87">		assertFalse(yorkVending.makePurchase(VendingMachine.A_CODE));</span>
+<span class="fc" id="L88">		yorkVending.returnChange();</span>
+<span class="fc" id="L89">		assertFalse(yorkVending.makePurchase(VendingMachine.A_CODE));</span>
+<span class="fc" id="L90">	}</span>
+	
+	/**
+	 * Test method for {@link edu.towson.cis.cosc603.project4.vendingmachine.VendingMachine#removeItem(java.lang.String)}.
+	 */
+	@Test (expected = VendingMachineException.class)
+	public void testRemoveItem() {
+<span class="fc" id="L97">		yorkVending.removeItem(VendingMachine.D_CODE);</span>
+<span class="nc" id="L98">		yorkVending.removeItem(VendingMachine.D_CODE);</span>
+		//assertTrue(yorkVending.makePurchase(VendingMachine.D_CODE));
+<span class="nc" id="L100">	}</span>
+	
+	/**
+	 * Test method for {@link edu.towson.cis.cosc603.project4.vendingmachine.VendingMachine#removeItem(java.lang.String)}.
+	 */
+	@Test (expected = VendingMachineException.class)
+	public void testAnotherRemoveItem() {
+<span class="nc" id="L107">		yorkVending.removeItem(&quot;E&quot;);</span>
+		//yorkVending.removeItem(VendingMachine.D_CODE);
+		//assertTrue(yorkVending.makePurchase(VendingMachine.D_CODE));
+<span class="nc" id="L110">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>VendingMachine (Apr 7, 2016 12:21:37 AM)</div></body></html>
